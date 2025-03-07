@@ -93,8 +93,7 @@ int main(int argc, char* argv[])
     Comp c;
     Node* fin = llfilter(head, c);
     print(fin);
-    //dealloc(head);
-    //dealloc(fin);
+    dealloc(fin);
 
 
     

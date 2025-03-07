@@ -89,8 +89,9 @@ Node* llfilter(Node* head, Comp pred)
     }
     //cout << head->val << endl;
     if(pred(head->val)){
-      return llfilter(head->next, pred);
-      delete head;
+        Node* temp = head->next;
+        delete head;
+        return llfilter(temp, pred);
     }
     else{
       head->next = llfilter(head->next, pred);
