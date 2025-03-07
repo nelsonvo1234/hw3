@@ -67,6 +67,9 @@ void dealloc(Node* head)
 //   function object struct declarations
 // -----------------------------------------------
 
+struct Comp{
+    bool operator()(int x){return x == 8;}
+};
 
 
 
@@ -84,9 +87,14 @@ int main(int argc, char* argv[])
     Node* head = readList(argv[1]);
     cout << "Original list: ";
     print(head);
-
+    Node* smaller;
+    Node* larger;
     // Test out your linked list code
-
+    Comp c;
+    Node* fin = llfilter(head, c);
+    print(fin);
+    //dealloc(head);
+    //dealloc(fin);
 
 
     
