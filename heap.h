@@ -16,7 +16,7 @@ public:
    *          as an argument and returns a bool if the first argument has
    *          priority over the second.
    */
-  Heap(int m=2, PComparator c = PComparator());
+  Heap(int m=2, PComparator c = PComparator()) ;
 
   /**
   * @brief Destroy the Heap object
@@ -112,13 +112,13 @@ void Heap<T,PComparator>::pop()
   size_t index = 0;
 
   while(index < data.size()){
-    size_t indexToSwap = 3*index + 1;
-    for(int i = 2; i < aryness && 3 * index + i < data.size(); i++){
-      if(c(data[indexToSwap], data[3 * index + i])){
-        indexToSwap = 3*index + i;
+    size_t indexToSwap = aryness*index + 1;
+    for(int i = 2; i < aryness + 1 && aryness * index + i < data.size(); i++){
+      if(comp(data[aryness * index + i], data[indexToSwap])){
+        indexToSwap = aryness*index + i;
       }
     }
-    if(c(data[indexToSwap], data[index])){
+    if(indexToSwap < data.size() && comp(data[indexToSwap], data[index])){
       std::swap(data[index], data[indexToSwap]);
       index = indexToSwap;
     }
@@ -131,23 +131,35 @@ void Heap<T,PComparator>::pop()
 template <typename T, typename PComparator>
 void Heap<T, PComparator>::push(const T& item){
   data.push_back(item);
+  
   std::size_t index = data.size() - 1;
-  while (index != 0) {
-      std::size_t parent_index = (index - 1) / aryness
-      ;
-      T& current = data[index];
-      T& parent = data[parent_index];
-      if(c(current, parent)){
-        std::swap(current, parent);
-      }
-      else{
-        break;
-      }
-      index = parent_index;
+  while (index > 0) {
+    std::size_t parent_index = (index - 1) / aryness;
+    // std::cout << "index" << index << std::endl;
+    // std::cout << "parent index" << parent_index << std::endl;
+    if(comp(data[index], data[parent_index])){
+      std::swap(data[index], data[parent_index]);
+    }
+    else{
+      break;
+    }
+    index = parent_index;
   }
 }
 
 
+template <typename T, typename PComparator>
+bool Heap<T, PComparator>::empty() const{
+  return data.size() == 0;
+}
+
+template <typename T, typename PComparator>
+size_t Heap<T, PComparator>::size() const{
+  return data.size();
+}
+
+template <typename T, typename PComparator>
+Heap<T, PComparator>::~Heap(){}
 
 #endif
 
