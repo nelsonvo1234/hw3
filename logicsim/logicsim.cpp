@@ -5,7 +5,7 @@
 #include "circuit.h"
 
 using namespace std;
-
+//hi
 int main(int argc, char* argv[])
 {
 	stringstream ss;

@@ -19,40 +19,43 @@ public:
     // Add other members only if necessary
 private:
     std::vector<T> stack;
-    size_t s;
 };
 
 template <typename T>
-Stack<T>::Stack() : s(0){}
+Stack<T>::Stack(){}
 
 template <typename T>
-bool Stack<T>::empty() const{ return s == 0;}
+bool Stack<T>::empty() const{ return stack.size() == 0;}
 
 template <typename T>
-size_t Stack<T>::size() const{return s;}
+size_t Stack<T>::size() const{return stack.size();}
 
 template <typename T>
 void Stack<T>::push(const T& item){
-    stack[s] = item;
-    s++;
+    stack.push_back(item);
 }
 
 template <typename T>
 void Stack<T>::pop(){
-    if(s == 0){
+    if(stack.size() == 0){
         throw std::underflow_error("Empty");
     }
     else{
-        s--;
+        stack.pop_back();
     }   
 }
 
 template <typename T>
 const T& Stack<T>::top() const{
-    if(s == 0){
+    if(stack.size() == 0){
         throw std::underflow_error("Empty");
     }
-    return stack[s];
+    return stack[stack.size() - 1];
+}
+
+template <typename T>
+Stack<T>::~Stack(){
+
 }
 
 

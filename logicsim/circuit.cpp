@@ -11,9 +11,8 @@
 #include "circuit.h"
 #include "event.h"
 
-Circuit::Circuit() : m_current_time(0)
+Circuit::Circuit() : m_current_time(0), m_pq(2, EventLess())
 {
-
 }
 
 Circuit::~Circuit()
