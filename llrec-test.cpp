@@ -91,9 +91,10 @@ int main(int argc, char* argv[])
     Node* larger;
     // Test out your linked list code
     Comp c;
-    Node* fin = llfilter(head, c);
-    print(fin);
-    dealloc(fin);
+    llpivot(head, smaller, larger, 7);
+    print(smaller);
+    print(larger);
+    print(head);
 
 
     
