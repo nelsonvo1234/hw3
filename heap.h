@@ -2,6 +2,7 @@
 #define HEAP_H
 #include <functional>
 #include <stdexcept>
+#include <vector>
 
 template <typename T, typename PComparator = std::less<T> >
 class Heap
@@ -61,7 +62,9 @@ public:
 
 private:
   /// Add whatever helper functions and data members you need below
-
+  std::vector<T> data;
+  int aryness;
+  PComparator comp;
 
 
 
@@ -81,16 +84,15 @@ T const & Heap<T,PComparator>::top() const
     // ================================
     // throw the appropriate exception
     // ================================
-
-
+    throw std::underflow_error("Empty");
   }
   // If we get here we know the heap has at least 1 item
   // Add code to return the top element
-
-
-
+  return data[0];
 }
 
+template <typename T, typename PComparator>
+Heap<T,PComparator>::Heap(int m, PComparator c) : aryness(m), comp(c) {}
 
 // We will start pop() for you to handle the case of 
 // calling top on an empty heap
@@ -101,12 +103,48 @@ void Heap<T,PComparator>::pop()
     // ================================
     // throw the appropriate exception
     // ================================
-
+    throw std::underflow_error("Empty");
 
   }
+  data[0] = data[data.size() - 1];
+  data.pop_back();
 
+  size_t index = 0;
 
+  while(index < data.size()){
+    size_t indexToSwap = 3*index + 1;
+    for(int i = 2; i < aryness && 3 * index + i < data.size(); i++){
+      if(c(data[indexToSwap], data[3 * index + i])){
+        indexToSwap = 3*index + i;
+      }
+    }
+    if(c(data[indexToSwap], data[index])){
+      std::swap(data[index], data[indexToSwap]);
+      index = indexToSwap;
+    }
+    else{
+      break;
+    }
+  }
+}
 
+template <typename T, typename PComparator>
+void Heap<T, PComparator>::push(const T& item){
+  data.push_back(item);
+  std::size_t index = data.size() - 1;
+  while (index != 0) {
+      std::size_t parent_index = (index - 1) / aryness
+      ;
+      T& current = data[index];
+      T& parent = data[parent_index];
+      if(c(current, parent)){
+        std::swap(current, parent);
+      }
+      else{
+        break;
+      }
+      index = parent_index;
+  }
 }
 
 
